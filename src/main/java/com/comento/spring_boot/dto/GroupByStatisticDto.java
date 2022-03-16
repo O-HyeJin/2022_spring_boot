@@ -3,9 +3,8 @@ package com.comento.spring_boot.dto;
 import lombok.Data;
 
 @Data
-public class StatisticDto {
-	private int requestID;
+public class GroupByStatisticDto {
+	private int totCnt;
+	private String date;
 	private String requestCode;
-	private String userID;
-	private String createDate;
 }

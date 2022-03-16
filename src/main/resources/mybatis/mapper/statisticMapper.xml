@@ -2,12 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="com.comento.spring_boot.dao.StatisticMapper">
+<mapper namespace="com.comento.spring_boot.mapper.StatisticMapper">
 
-	<select id="selectYearLogin" parameterType="String" resultType="hashMap">
-		select count(*) as totCnt
-		from statistc.requestinfo ri
-		where left(ri.createDate, 2) = #{year};
+	<select id="selectYearLogin" parameterType="String" 
+		resultType="com.comento.spring_boot.dto.GroupByStatisticDto">
+		select DISTINCT count(*) as totCnt, #{year} as date, requestCode
+		from statistic.requestinfo ri
+		where (left(ri.createDate, 2) = #{year}) AND (ri.requestCode = 'L');
 	</select>
 	
 </mapper>
