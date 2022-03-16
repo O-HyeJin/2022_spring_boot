@@ -1,8 +1,12 @@
-package com.comento.spring_boot.dao;
+package com.comento.spring_boot.mapper;
 
-import java.util.HashMap;
-import com.comento.spring_boot.dto.StatisticDto;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
+import com.comento.spring_boot.dto.GroupByStatisticDto;
+
+@Repository
+@Mapper
 public interface StatisticMapper {
-	public HashMap<String, Object> selectYearLogin(String year); 
+	public GroupByStatisticDto selectYearLogin(String year); 
 }
