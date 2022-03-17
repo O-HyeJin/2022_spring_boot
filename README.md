@@ -17,7 +17,10 @@
 4. DTO 클래스 작성
 
 #### 2022.03.16
-1. 프로젝트 디렉토리 구조 변경(resources > mybatis > mapper)
+1. 프로젝트 디렉토리 구조 변경 (resources > mybatis > mapper)
 2. MybatisConfig에 Mapper설정 추가
 3. DTO를 SQL resultType으로 활용
 4. 3에 따라 Service 구현 클래스 로직 수정
+
+#### 2022.03.17
+1. 4차 과제에 쓰일 5가지 쿼리 작성 (sql 파일 업로드)
