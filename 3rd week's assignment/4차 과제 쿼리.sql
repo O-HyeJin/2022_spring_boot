@@ -7,16 +7,16 @@ SELECT DISTINCT count(*) as totCnt, '20' as date, ri.requestCode
 -- ----------------------------------------
 		
 /* 월별 접속자 수(중복X)
-	yearMonth = 2008 */
-SELECT COUNT(*) AS totCnt, '2008' AS date
+	groupByMonth = true */
+SELECT COUNT(*) AS totCnt, LEFT(ri.createDate, 4) AS date
 	FROM statistic.requestinfo ri
-	WHERE (left(ri.createDate, 4) = '2008');
+	GROUP BY date;
 
 /* 일별 접속자 수(중복X)
-	yearMonthDay = 200821 */
-SELECT COUNT(*) AS totCnt, '200821' AS date
+	groupByDay = true */
+SELECT COUNT(*) AS totCnt, LEFT(ri.createDate, 6) AS date
 	FROM statistic.requestinfo ri
-	WHERE (left(ri.createDate, 6) = '200821');
+	GROUP BY date;
 
 /* 부서별(월별) 접속자 수(중복X)
 	yearMonth = 2008, organ = A */
