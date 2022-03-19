@@ -7,39 +7,39 @@ SELECT DISTINCT count(*) as totCnt, '20' as date, ri.requestCode
 -- ----------------------------------------
 		
 /* 월별 접속자 수(중복X)
-	groupByMonth = true */
+	groupByMonth */
 SELECT COUNT(*) AS totCnt, LEFT(ri.createDate, 4) AS date
 	FROM statistic.requestinfo ri
 	GROUP BY date;
 
 /* 일별 접속자 수(중복X)
-	groupByDay = true */
+	groupByDay */
 SELECT COUNT(*) AS totCnt, LEFT(ri.createDate, 6) AS date
 	FROM statistic.requestinfo ri
 	GROUP BY date;
 
 /* 부서별(월별) 접속자 수(중복X)
-	yearMonth = 2008, organ = A */
-SELECT COUNT(*) AS totCnt, '2008' AS date, u.organization
+	groupByOrgan */
+SELECT COUNT(*) AS totCnt, LEFT(ri.createDate, 4) AS date, u.organization AS organ
 	FROM statistic.requestinfo ri, statistic.user u
-	WHERE (left(ri.createDate, 4) = '2008') AND (ri.userID = u.userID)
-	AND (u.organization = "A");
+	WHERE ri.userID = u.userID
+	GROUP BY u.organization, date; 
 	
 /* 평균 하루 로그인 수 
-	yearMonth = 2008, average = true */
-SELECT AVG(reqCount.loginCnt) as totCnt
+	groupByMonth, average */
+SELECT AVG(reqCount.loginCnt) as totCnt, LEFT(sub_date, 4) AS date
 	from 
-		(SELECT COUNT(*) AS loginCnt, LEFT(ri.createDate, 6) AS date 
+		(SELECT COUNT(*) AS loginCnt, LEFT(ri.createDate, 6) AS sub_date
 		FROM statistic.requestinfo ri
-		WHERE ri.requestCode = "L" GROUP BY date) reqCount
-	WHERE (left(date, 4) = '2008');
+		WHERE ri.requestCode = "L" GROUP BY sub_date) reqCount
+	GROUP BY date;
 
 /* 휴일을 제외한 로그인 수(여기서는 주말 포함)
 	따라서 3차 과제에서는 총 로그인 수를 구한다.
-	yearMonth = 2008, weekday = true */
-SELECT COUNT(*) AS totCnt
+	groupByMonth, weekday */
+SELECT COUNT(*) AS totCnt, LEFT(sub_date, 4) AS date
 	FROM statistic.requestinfo ri
-	WHERE (left(ri.createDate, 4) = '2008') AND (ri.requestCode = "L");
+	WHERE ri.requestCode = "L";
 
 
 
