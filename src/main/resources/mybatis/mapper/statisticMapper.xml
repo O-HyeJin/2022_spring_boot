@@ -3,12 +3,53 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="com.comento.spring_boot.mapper.StatisticMapper">
-
+	
+	<!-- test -->
 	<select id="selectYearLogin" parameterType="String" 
-		resultType="com.comento.spring_boot.dto.GroupByStatisticDto">
+		resultType="com.comento.spring_boot.dto.TestDto">
 		select DISTINCT count(*) as totCnt, #{year} as date, requestCode
 		from statistic.requestinfo ri
-		where (left(ri.createDate, 2) = #{year}) AND (ri.requestCode = 'L');
+		where (left(ri.createDate, 2) = #{year}) AND (ri.requestCode = 'L')
 	</select>
 	
+	<!-- SW 활용 현황 API -->
+	<select id="selectGroupByMonth"
+		resultType="com.comento.spring_boot.dto.StatisticDto">
+	<![CDATA[
+		SELECT COUNT(*) AS totCnt, LEFT(ri.createDate, 4) AS date
+		FROM statistic.requestinfo ri
+		GROUP BY date
+	]]>
+	</select>
+	
+	<select id="selectGroupByDay"
+		resultType="com.comento.spring_boot.dto.StatisticDto">
+	<![CDATA[
+		SELECT COUNT(*) AS totCnt, LEFT(ri.createDate, 6) AS date
+		FROM statistic.requestinfo ri
+		GROUP BY date;
+	]]>
+	</select>
+	
+	<select id="selectGroupByOrgan"
+		resultType="com.comento.spring_boot.dto.OrganStatisticDto">
+	<![CDATA[
+		SELECT COUNT(*) AS totCnt, LEFT(ri.createDate, 4) AS date, u.organization as organ
+		FROM statistic.requestinfo ri, statistic.user u
+		WHERE ri.userID = u.userID
+		GROUP BY u.organization, date;	
+	]]>
+	</select>
+	
+	<select id="selectAvgGroupByMonth"
+		resultType="com.comento.spring_boot.dto.AvgStatisticDto">
+	<![CDATA[
+		SELECT AVG(reqCount.loginCnt) as totCnt, LEFT(sub_date, 4) AS date
+		from 
+			(SELECT COUNT(*) AS loginCnt, LEFT(ri.createDate, 6) AS sub_date
+			FROM statistic.requestinfo ri
+			WHERE ri.requestCode = "L" GROUP BY sub_date) reqCount
+		GROUP BY date;
+	]]>
+	</select>
 </mapper>
