@@ -21,4 +21,6 @@ public interface StatisticMapper {
 	public List<StatisticDto> selectGroupByDay();
 	public List<OrganStatisticDto> selectGroupByOrgan();
 	public List<AvgStatisticDto> selectAvgGroupByMonth();
+	public List<StatisticDto> selectLoginGroupByMonth();
+	public List<StatisticDto> selectLoginGroupByDay();
 }

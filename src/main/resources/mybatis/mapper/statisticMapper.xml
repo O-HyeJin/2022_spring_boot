@@ -52,4 +52,22 @@
 		GROUP BY date;
 	]]>
 	</select>
+	
+	<select id="selectLoginGroupByMonth"
+		resultType="com.comento.spring_boot.dto.StatisticDto">
+	<![CDATA[
+		SELECT COUNT(*) AS totCnt, CONCAT("20", LEFT(ri.createDate, 4))  AS date 
+		FROM statistic.requestinfo ri
+		WHERE requestCode = "L" GROUP BY date;
+	]]>
+	</select>
+	
+	<select id="selectLoginGroupByDay"
+		resultType="com.comento.spring_boot.dto.StatisticDto">
+	<![CDATA[
+		SELECT COUNT(*) AS totCnt, CONCAT("20", LEFT(ri.createDate, 6))  AS date 
+		FROM statistic.requestinfo ri
+		WHERE requestCode = "L" GROUP BY date;
+	]]>
+	</select>
 </mapper>
