@@ -36,14 +36,19 @@ SELECT AVG(reqCount.loginCnt) as totCnt, LEFT(sub_date, 4) AS date
 
 /* 휴일을 제외한 로그인 수(여기서는 주말 포함)
 	따라서 3차 과제에서는 총 로그인 수를 구한다.
-	groupByMonth, weekday */
-SELECT COUNT(*) AS totCnt, LEFT(sub_date, 4) AS date
+	groupByDay, weekday */
+SELECT COUNT(*) AS totCnt, CONCAT("20", LEFT(ri.createDate, 6))  AS date 
 	FROM statistic.requestinfo ri
-	WHERE ri.requestCode = "L";
+	WHERE requestCode = "L" GROUP BY date;
+
+-- 월별 로그인 수 
+SELECT COUNT(*) AS totCnt, CONCAT("20", LEFT(ri.createDate, 4))  AS date 
+	FROM statistic.requestinfo ri
+	WHERE requestCode = "L" GROUP BY date;
 
 
 
 /* 일자별 로그인 수(평일 하루 로그인 수 서브쿼리) */
-SELECT COUNT(*) AS loginCnt, LEFT(ri.createDate, 6) AS date 
+SELECT COUNT(*) AS loginCnt, CONCAT("20", LEFT(ri.createDate, 6))  AS date 
 	FROM statistic.requestinfo ri
 	WHERE requestCode = "L" GROUP BY date;
