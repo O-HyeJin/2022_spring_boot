@@ -52,7 +52,7 @@ public class Test {
 		String urlstr = "http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo?"
 				+ "solYear=2019"
 				+ "&solMonth=03"
-				+ "&ServiceKey=PHhqZKbAqKUUjsg25R1UiCGgTBFZtkJ7TNML%2BgBjZXf6i0KcscSuLZEB%2Fku3Zp%2FYJ2CS2vkLoOY%2BoE3R%2B3OESw%3D%3D";
+				+ "&ServiceKey=%2FJn9UW3uqSwZ9bbeKtlFhdcTTcjNM0rhHO0KLb5FYNWKJvksJZFC%2FQFOaTsmloggc2mY0FE0OXaJFWzV%2BRZFOw%3D%3D";
 		URL url = new URL(urlstr);
 		HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 		urlConnection.connect();
