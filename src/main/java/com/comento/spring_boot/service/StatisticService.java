@@ -2,11 +2,13 @@ package com.comento.spring_boot.service;
 
 import java.util.HashMap;
 
+import org.json.simple.JSONObject;
+
 public interface StatisticService {
 	public HashMap<String, Object> yearLoginNum (String year);
-	public HashMap<String, Object> monthConnNum();
-	public HashMap<String, Object> dayConnNum();
-	public HashMap<String, Object> organConnNum();
-	public HashMap<String, Object> avgLoginNum();
-	public HashMap<String, Object> weekdayLoginNum();
+	public JSONObject monthConnNum();
+	public JSONObject dayConnNum();
+	public JSONObject organConnNum();
+	public JSONObject avgLoginNum();
+	public JSONObject weekdayLoginNum() throws Exception;
 }

@@ -1,7 +1,7 @@
 package com.comento.spring_boot;
 
-import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,17 +18,17 @@ public class ConnStatisticController {
 	private StatisticService service;
 	
 	@RequestMapping("/groupByMonth")
-	public Map<String, Object> byMonthStt() {
+	public JSONObject byMonthStt() {
 		return service.monthConnNum();
 	}
 	
 	@RequestMapping("/groupByDay")
-	public Map<String, Object> byDayStt() {
+	public JSONObject byDayStt() {
 		return service.dayConnNum();
 	}
 	
 	@RequestMapping("/groupByOrgan")
-	public Map<String, Object> byOrganStt() {
+	public JSONObject byOrganStt() {
 		return service.organConnNum();
 	}
 	
