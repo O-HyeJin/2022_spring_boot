@@ -16,7 +16,7 @@
 	<select id="selectGroupByMonth"
 		resultType="com.comento.spring_boot.dto.StatisticDto">
 	<![CDATA[
-		SELECT COUNT(*) AS totCnt, LEFT(ri.createDate, 4) AS date
+		SELECT COUNT(*) AS totCnt, CONCAT("20", LEFT(ri.createDate, 4)) AS date
 		FROM statistic.requestinfo ri
 		GROUP BY date
 	]]>
@@ -25,7 +25,7 @@
 	<select id="selectGroupByDay"
 		resultType="com.comento.spring_boot.dto.StatisticDto">
 	<![CDATA[
-		SELECT COUNT(*) AS totCnt, LEFT(ri.createDate, 6) AS date
+		SELECT COUNT(*) AS totCnt, CONCAT("20", LEFT(ri.createDate, 6)) AS date
 		FROM statistic.requestinfo ri
 		GROUP BY date;
 	]]>
@@ -34,7 +34,7 @@
 	<select id="selectGroupByOrgan"
 		resultType="com.comento.spring_boot.dto.OrganStatisticDto">
 	<![CDATA[
-		SELECT COUNT(*) AS totCnt, LEFT(ri.createDate, 4) AS date, u.organization as organ
+		SELECT COUNT(*) AS totCnt, CONCAT("20", LEFT(ri.createDate, 4)) AS date, u.organization as organ
 		FROM statistic.requestinfo ri, statistic.user u
 		WHERE ri.userID = u.userID
 		GROUP BY u.organization, date;	
@@ -44,9 +44,9 @@
 	<select id="selectAvgGroupByMonth"
 		resultType="com.comento.spring_boot.dto.AvgStatisticDto">
 	<![CDATA[
-		SELECT AVG(reqCount.loginCnt) as totCnt, LEFT(sub_date, 4) AS date
+		SELECT AVG(reqCount.loginCnt) as totCnt, LEFT(sub_date, 6) AS date
 		from 
-			(SELECT COUNT(*) AS loginCnt, LEFT(ri.createDate, 6) AS sub_date
+			(SELECT COUNT(*) AS loginCnt, CONCAT("20", LEFT(ri.createDate, 6)) AS sub_date
 			FROM statistic.requestinfo ri
 			WHERE ri.requestCode = "L" GROUP BY sub_date) reqCount
 		GROUP BY date;
@@ -56,9 +56,12 @@
 	<select id="selectLoginGroupByMonth"
 		resultType="com.comento.spring_boot.dto.StatisticDto">
 	<![CDATA[
-		SELECT COUNT(*) AS totCnt, CONCAT("20", LEFT(ri.createDate, 4))  AS date 
-		FROM statistic.requestinfo ri
-		WHERE requestCode = "L" GROUP BY date;
+		SELECT COUNT(*) AS totCnt, LEFT(sub_date, 6) AS date 
+		FROM (SELECT COUNT(*) AS totCnt, CONCAT("20", LEFT(ri.createDate, 6)) AS sub_date 
+			FROM statistic.requestinfo ri
+			WHERE requestCode = "L" AND isHoliday(ri.createDate)
+			GROUP BY sub_date) reqDays
+		GROUP BY date;
 	]]>
 	</select>
 	
@@ -67,7 +70,8 @@
 	<![CDATA[
 		SELECT COUNT(*) AS totCnt, CONCAT("20", LEFT(ri.createDate, 6))  AS date 
 		FROM statistic.requestinfo ri
-		WHERE requestCode = "L" GROUP BY date;
+		WHERE requestCode = "L" AND isHoliday(ri.createDate)
+		GROUP BY date;
 	]]>
 	</select>
 </mapper>
