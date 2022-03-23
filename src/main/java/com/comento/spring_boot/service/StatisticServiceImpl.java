@@ -102,14 +102,17 @@ public class StatisticServiceImpl implements StatisticService{
 	public JSONObject setResultJson(List<? extends StatisticObj> list) {
 		
 		JSONObject json = new JSONObject();
-		json.put("is_success", true);
-		json.put("data", list);
-
+		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
+		map.put("is_success", true);
+		map.put("data", list);
+		json.putAll(map);
+		
 		return json;
 	}
 	
 	public JSONObject setResultList(
 			HashMap<String, Integer> removedLogin, List<StatisticDto> list) {
+		
 		for (Entry<String, Integer> entrySet : removedLogin.entrySet()) {
 			String yearMonth = entrySet.getKey().substring(0, 6);
 			
@@ -118,7 +121,8 @@ public class StatisticServiceImpl implements StatisticService{
 				
 				if (yearMonth.equals(dto.getDate())) {
 					int totCnt = dto.getTotCnt();
-					dto.setTotCnt(totCnt-1);
+					int rmvLoginCnt = entrySet.getValue();
+					dto.setTotCnt(totCnt-rmvLoginCnt);
 					list.set(j, dto);
 				}
 			}
