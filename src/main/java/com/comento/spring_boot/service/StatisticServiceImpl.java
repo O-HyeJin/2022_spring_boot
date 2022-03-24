@@ -30,6 +30,8 @@ import com.comento.spring_boot.dto.StatisticObj;
 import com.comento.spring_boot.dto.TestDto;
 import com.comento.spring_boot.mapper.StatisticMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import lombok.AllArgsConstructor;
 
@@ -106,6 +108,11 @@ public class StatisticServiceImpl implements StatisticService{
 		map.put("is_success", true);
 		map.put("data", list);
 		json.putAll(map);
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String jsonPrinting = gson.toJson(json);
+		
+		System.out.println(jsonPrinting);
 		
 		return json;
 	}
